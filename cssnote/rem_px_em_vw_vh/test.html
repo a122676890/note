@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>    
+        // var baseSize = 50, // 基数 如果取值５０　则设计标注中任何PX 可以直接转换px/50 rem 
+        //     baseWidth = 375//量取值大小
+        //需要考虑到dpr，即一倍屏两倍屏的问题 
+        // fontSize = ( document.documentElement.clientWidth / baseWidth * baseSize ).toFixed( 2 )
+        ( function ( doc, win ) {
+            var docEl = doc.documentElement
+            console.log( docEl )
+            var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize'
+            var baseSize = 50
+            var baseWidth = 375
+            var recalc = function () {
+                var clientWidth = docEl.clientWidth;
+                if ( !clientWidth ) return
+                var fontSize = document.documentElement.clientWidth / baseWidth * baseSize
+                docEl.style.fontSize = fontSize + 'px'
+
+            }
+            if ( !doc.addEventListener ) return;
+            win.addEventListener( resizeEvt, recalc, false )
+            doc.addEventListener( 'DOMContentLoaded', recalc, false )
+            //window.addEventListener和document.addEventListener
+            // 捕获，window先于document 冒泡，document先于window
+        } )( document, window )
+    </script>
+</head>
+
+<body>
+    <p style="font-size:1rem">
+        sfa
+    </p>
+</body>
+
+</html>
