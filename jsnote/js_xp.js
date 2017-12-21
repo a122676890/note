@@ -11,7 +11,7 @@ let arraycompare = (a, b) => {
 let fun = arr => {
   let len = arr.length
   for (let i = arr.length - 1; i > 0; i--) {
-    let key = Math.floor(Math.random() * len--)
+    let key = Math.floor(Math.random() * (i + 1))
     let temp = arr[key]
     arr[key] = arr[i]
     arr[i] = temp
@@ -26,7 +26,7 @@ let fun = arr => {
 }
 /**
  */
-for (let k = 0; k < 100000; k++) {
+for (let k = 0; k < 10000000; k++) {
   fun(initData)
 }
 console.log(tj)

@@ -9,7 +9,6 @@ let testPromise = (index, listIndex) => {
   return new Promise(resolve => {
     let delay = Math.random() * 1000
     setTimeout(() => {
-      console.log(index, delay)
       resolve({
         index,
         listIndex
