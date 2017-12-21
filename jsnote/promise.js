@@ -1,7 +1,10 @@
 /**
  * Promist 队列执行的一种简单实现
  */
-
+let initConnect = 10 //总的连接数
+let current = 3 //最大执行数
+let promiseList = []
+let successIndex = 0
 let testPromise = (index, listIndex) => {
   return new Promise(resolve => {
     let delay = Math.random() * 1000
@@ -14,11 +17,6 @@ let testPromise = (index, listIndex) => {
     }, delay)
   })
 }
-
-let initConnect = 10
-let current = 3
-let promiseList = []
-let successIndex = 0
 
 let createPromise = (i, v) => {
   initConnect--
