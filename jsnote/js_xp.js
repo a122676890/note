@@ -10,6 +10,7 @@ let arraycompare = (a, b) => {
 }
 let fun = arr => {
   let len = arr.length
+  // 判断条件注意下　这样是生成 n!的组合
   for (let i = arr.length - 1; i > 0; i--) {
     let key = Math.floor(Math.random() * (i + 1))
     let temp = arr[key]
