@@ -1,6 +1,6 @@
 class PromiseLists {
   constructor(urls, current, allConnect) {
-    if (!urls || !this.isUrls(urls)) {
+    if (!urls && !this.isUrls(urls)) {
       throw Error('urls is required')
     } else {
       this.urls = urls
