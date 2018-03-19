@@ -18,10 +18,10 @@
 
 ```js
 React.createElement(
-  'div',
-  null,
-  React.createElement('img', { src: 'avatar.png', className: 'profile' }),
-  React.createElement('h3', null, [user.firstName, user.lastName].join(' '))
+    'div',
+    null,
+    React.createElement('img', { src: 'avatar.png', className: 'profile' }),
+    React.createElement('h3', null, [user.firstName, user.lastName].join(' '))
 )
 ```
 
@@ -29,11 +29,11 @@ React.createElement(
 
 ```json
 {
-  type,
-  key,
-  props: {
-    children
-  }
+    type,
+    key,
+    props: {
+        children
+    }
 }
 ```
 
@@ -55,8 +55,8 @@ JSX 形似 HTML, 用来描述 UI，JSX 最终的到一个 Elements Tree，所�
 
 ```json
 {
-  type: string | ReactClass,
-  props: Object
+    type: string | ReactClass,
+    props: Object
 }
 ```
 
@@ -64,16 +64,16 @@ JSX 形似 HTML, 用来描述 UI，JSX 最终的到一个 Elements Tree，所�
 
 ```json
 {
-  type: "button",
-  props: {
-    className: "button button-blue",
-    children: {
-      type: "b",
-      props: {
-        children: "OK!"
-      }
+    type: "button",
+    props: {
+        className: "button button-blue",
+        children: {
+            type: "b",
+            props: {
+                children: "OK!"
+            }
+        }
     }
-  }
 }
 ```
 
@@ -93,11 +93,11 @@ JSX 形似 HTML, 用来描述 UI，JSX 最终的到一个 Elements Tree，所�
 
 ```json
 {
-  type: Button,
-  props: {
-    color: "blue",
-    children: "OK!"
-  }
+    type: Button,
+    props: {
+        color: "blue",
+        children: "OK!"
+    }
 }
 ```
 
@@ -105,30 +105,30 @@ JSX 形似 HTML, 用来描述 UI，JSX 最终的到一个 Elements Tree，所�
 
 ```js
 const DeleteAccount = () => ({
-  type: 'div',
-  props: {
-    children: [
-      {
-        type: 'p',
-        props: {
-          children: 'Are you sure?'
-        }
-      },
-      {
-        type: DangerButton,
-        props: {
-          children: 'Yep'
-        }
-      },
-      {
-        type: Button,
-        props: {
-          color: 'blue',
-          children: 'Cancel'
-        }
-      }
-    ]
-  }
+    type: 'div',
+    props: {
+        children: [
+            {
+                type: 'p',
+                props: {
+                    children: 'Are you sure?'
+                }
+            },
+            {
+                type: DangerButton,
+                props: {
+                    children: 'Yep'
+                }
+            },
+            {
+                type: Button,
+                props: {
+                    color: 'blue',
+                    children: 'Cancel'
+                }
+            }
+        ]
+    }
 })
 ```
 
@@ -136,19 +136,19 @@ const DeleteAccount = () => ({
 
 ```js
 const DeleteAccount = () => (
-  <div>
-    <p>Are you sure?</p>
-    <DangerButton>Yep</DangerButton>
-    <Button color="blue">Cancel</Button>
-  </div>
+    <div>
+        <p>Are you sure?</p>
+        <DangerButton>Yep</DangerButton>
+        <Button color="blue">Cancel</Button>
+    </div>
 )
 ```
 
 这种混合搭配帮助组件可以彼此解耦，因为它们可以仅仅通过组合（composition）就能表达 is-a 和 has-a 的关系：
 
-* Button 是有特定属性（specific properties）的 DOM 元素
-* DangerButton 是有特定属性的 Button
-* DeleteAccount 在<div>里包含了 Button 和 DangerButton
+*   Button 是有特定属性（specific properties）的 DOM 元素
+*   DangerButton 是有特定属性的 Button
+*   DeleteAccount 在<div>里包含了 Button 和 DangerButton
 
 ###  组件如何生成 Element tree
 
@@ -156,11 +156,11 @@ const DeleteAccount = () => (
 
 ```json
 {
-  type: Button,
-  props: {
-    color: "blue",
-    children: "OK!"
-  }
+    type: Button,
+    props: {
+        color: "blue",
+        children: "OK!"
+    }
 }
 ```
 
@@ -168,16 +168,16 @@ React 会传给 Button props，Button 返回：
 
 ```json
 {
-  type: "button",
-  props: {
-    className: "button button-blue",
-    children: {
-      type: "b",
-      props: {
-        children: "OK!"
-      }
+    type: "button",
+    props: {
+        className: "button button-blue",
+        children: {
+            type: "b",
+            props: {
+                children: "OK!"
+            }
+        }
     }
-  }
 }
 ```
 
@@ -196,31 +196,31 @@ React 会重复这种过程，直到获取页面上所有的组件想渲染出�
 ```js
 // class 创建组件，推荐
 ReactDOM.render(
-  {
-    type: Form,
-    props: {
-      isSubmitted: false,
-      buttonText: 'OK!'
-    }
-  },
-  document.getElementById('root')
+    {
+        type: Form,
+        props: {
+            isSubmitted: false,
+            buttonText: 'OK!'
+        }
+    },
+    document.getElementById('root')
 )
 const Form = ({ isSubmitted, buttonText }) => {
-  if (isSubmitted) {
+    if (isSubmitted) {
+        return {
+            type: Message,
+            props: {
+                text: 'Success!'
+            }
+        }
+    }
     return {
-      type: Message,
-      props: {
-        text: 'Success!'
-      }
+        type: Button,
+        props: {
+            children: buttonText,
+            color: 'blue'
+        }
     }
-  }
-  return {
-    type: Button,
-    props: {
-      children: buttonText,
-      color: 'blue'
-    }
-  }
 }
 ```
 
