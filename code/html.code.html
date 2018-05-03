@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>常用的代码片段</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css">
+  <style>
+    pre {
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <pre>
+    <code>
+      // 预加载图像
+      $.preloadImages = function () {
+        for (let i = 0; i < arguments.length; i++) {
+          $('img').attr('src', arguments[i])
+        }
+      }
+      $.preloadImages('a.png','a.jpg')
+    </code>
+  </pre>
+  <script>
+    $.preloadImages = function () {
+      for (let i = 0; i < arguments.length; i++) {
+        $('img').attr('src', arguments[i])
+      }
+    }
+  </script>
+
+  <pre>
+      <code>
+        // 自动修复破坏的图像
+        $('img').on('error',function(){
+          if(!$(this).hasClass('broken-image')){
+            $(this).prop('src','img/broken.png').addClass('broken-image')
+          }
+        })
+      </code>
+  </pre>
+
+  <pre>
+    <code>
+      // 悬停切换
+      $(element).hover(function(){
+        $(this).addClass('hover')
+      },function(){
+        $(this.removeClass('hover'))
+      })
+    </code>
+  </pre>
+  <pre>
+    <code>
+      // 淡入淡出/显示隐藏
+      $(element).hover(function(){
+        $(this).addClass('hover')
+      },function(){
+        $(this.removeClass('hover'))
+      })
+    </code>
+  </pre>
+  <pre>
+      <code>
+        // 鼠标滚轮
+        $('#content').on("mousewheel DOMMouseScroll", function (event) { 
+          // chrome & ie || // firefox
+          const delta = (event.originalEvent.wheelDelta && (event.originalEvent.wheelDelta > 0 ? 1 : -1)) || 
+              (event.originalEvent.detail && (event.originalEvent.detail > 0 ? -1 : 1));  
+          if (delta > 0) { 
+              console.log('mousewheel top');
+          } else if (delta < 0) {
+              console.log('mousewheel bottom');
+          } 
+      });
+      
+      </code>
+    </pre>
+
+  <pre>
+      <code>
+        // 鼠标坐标 原生实现
+        function mousePoint(event){
+          if(event.pageX || event.pageY){
+            return {x:event.pageX,y:event.pageY}
+          }
+          return {
+            x:event.clientX+document.body.scrollLeft-document.body.clientLeft,
+            y:event.clientY+document.body.scrollTop-document.body.clientTop
+          }
+        }
+        function mouseMove(event){
+          event=event ||window.event;
+          const mousePro=mousePoint(event);
+          document.getElementById('XXX').value=mousePro.x;
+          document.getElementById('yyy').value=mousePro.y
+        }
+        document.onmousemove=mouseMove
+
+        // jquery
+        $('element').click(function(event){
+          // 获取鼠标在图片上的坐标 
+          console.log('x:'+event.offsetX+' y:'+event.offsetY)
+          // 获取元素相对于页面的坐标 
+          console.log('x:'+$(this).offset().left +' y'+$(this).offset().top)
+        })
+      </code>
+  </pre>
+
+
+  <pre>
+    <code>
+      // 禁止移动端浏览器页面滚动
+      // html 
+      body ontouchmove="event.preventDefault()" 
+      // js //touchstart
+      document.addEventListener('touchmove',function(event){
+        event.preventDefault();
+      })
+    </code>
+  </pre>
+
+  <pre>
+    <code>
+      // 阻止默认行为
+      // js
+      document.getElementById('id').addEventListener('click',function(event){
+        event=event||window.event;
+        if(event.preventDefault){
+          event.preventDefault()
+        }else{
+          event.returnValue=false;
+        }
+      })
+      // jquery
+      $('#btn').on('click', function (event) {
+        event.preventDefault();
+      });
+    </code>
+  </pre>
+  <pre>
+    <code>
+      //阻止冒泡
+      // js
+      document.getElementById('btn').addEventListener('click', function (event) {
+        event = event || window.event；
+        if (event.stopPropagation){
+            event.stopPropagation();
+        } else{
+            event.cancelBubble = true;
+        }
+      }, false);
+      // jquery
+      $('#btn').on('click', function (event) {
+        event.stopPropagation();
+      });
+    </code>
+  </pre>
+  <pre>
+    <code>
+      // 检测浏览器是否支持svg
+      function isSupportSVG() { 
+        var SVG_NS = 'http://www.w3.org/2000/svg';
+        return !!document.createElementNS &&!!document.createElementNS(SVG_NS, 'svg').createSVGRect; 
+      } 
+    </code>
+  </pre>
+
+  <pre>
+    <code>
+      // 检测浏览器是否支持 canvas
+     function isSupportCanvas() {
+        if(document.createElement('canvas').getContext){
+            return true;
+        }else{
+            return false;
+        }
+      }
+    </code>
+  </pre>
+  <pre>
+    <code>
+      //  检测是否是微信浏览器
+      function isWeiXinClient() {
+        var ua = navigator.userAgent.toLowerCase(); 
+        if (ua.match(/MicroMessenger/i)=="micromessenger") { 
+            return true; 
+        } else { 
+            return false; 
+        }
+      }
+    </code>
+  </pre>
+  <pre>
+    <code>
+      //  检测是否移动端及浏览器内核
+      var browser = { 
+        versions: function() { 
+            var u = navigator.userAgent; 
+            return { 
+                trident: u.indexOf('Trident') > -1, //IE内核 
+                presto: u.indexOf('Presto') > -1, //opera内核 
+                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核 
+                gecko: u.indexOf('Firefox') > -1, //火狐内核Gecko 
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否移动终端 
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios 
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android 
+                iPhone: u.indexOf('iPhone') > -1 , //iPhone 
+                iPad: u.indexOf('iPad') > -1, //iPad 
+                webApp: u.indexOf('Safari') > -1 //Safari 
+            }; 
+        }
+    } 
+    
+    if (browser.versions.mobile() || browser.versions.ios() || browser.versions.android() || browser.versions.iPhone() || browser.versions.iPad()) { 
+        alert('移动端'); 
+    }
+    </code>
+  </pre>
+
+  <pre>
+    <code>
+        var browser={ 
+          versions:function(){
+              var u = navigator.userAgent, app = navigator.appVersion;
+              var sUserAgent = navigator.userAgent;
+              return {
+              trident: u.indexOf('Trident') > -1,
+              presto: u.indexOf('Presto') > -1, 
+              isChrome: u.indexOf("chrome") > -1, 
+              isSafari: !u.indexOf("chrome") > -1 && (/webkit|khtml/).test(u),
+              isSafari3: !u.indexOf("chrome") > -1 && (/webkit|khtml/).test(u) && u.indexOf('webkit/5') != -1,
+              webKit: u.indexOf('AppleWebKit') > -1, 
+              gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+              mobile: !!u.match(/AppleWebKit.*Mobile.*/), 
+              ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), 
+              android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+              iPhone: u.indexOf('iPhone') > -1, 
+              iPad: u.indexOf('iPad') > -1,
+              iWinPhone: u.indexOf('Windows Phone') > -1
+              };
+          }()
+      }
+      if(browser.versions.mobile || browser.versions.iWinPhone){
+          window.location = "http:/www.baidu.com/m/";
+      } 
+    </code>
+  </pre>
+  <pre>
+    <code>
+        function getInternet(){    
+          if(navigator.userAgent.indexOf("MSIE")>0) {    
+            return "MSIE";       //IE浏览器  
+          }  
+          if(isFirefox=navigator.userAgent.indexOf("Firefox")>0){    
+            return "Firefox";     //Firefox浏览器  
+          }  
+          if(isSafari=navigator.userAgent.indexOf("Safari")>0) {    
+            return "Safari";      //Safan浏览器  
+          }  
+          if(isCamino=navigator.userAgent.indexOf("Camino")>0){    
+            return "Camino";   //Camino浏览器  
+          }  
+          if(isMozilla=navigator.userAgent.indexOf("Gecko/")>0){    
+            return "Gecko";    //Gecko浏览器  
+          }    
+        } 
+    </code>
+  </pre>
+
+  <pre>
+    <code>
+      //强制移动端页面横屏显示
+      $(window).on("orientationchange", function( event ) {
+        if (event.orientation=='portrait') {
+            $('body').css('transform', 'rotate(90deg)');
+        } else {
+            $('body').css('transform', 'rotate(0deg)');
+        }
+      });
+      $( window ).orientationchange();
+    </code>
+  </pre>
+
+  <pre>
+    <code>
+      // 电脑端页面全屏显示
+      function fullscreen(element) {
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+        }
+      }
+      fullscreen(document.documentElement);
+    </code>
+  </pre>
+  <pre>
+    <code>
+      // 常用正则表达式
+      //验证邮箱 
+      /^\w+@([0-9a-zA-Z]+[.])+[a-z]{2,4}$/ 
+      //验证手机号 
+      /^1[3|5|8|7]\d{9}$/ 
+      //验证URL 
+      /^http:\/\/.+\./
+      //验证身份证号码 
+      /(^\d{15}$)|(^\d{17}([0-9]|X|x)$)/ 
+      //匹配字母、数字、中文字符 
+      /^([A-Za-z0-9]|[\u4e00-\u9fa5])*$/ 
+      //匹配中文字符
+      /[\u4e00-\u9fa5]/ 
+      //匹配双字节字符(包括汉字) 
+      /[^\x00-\xff]/
+    </code>
+  </pre>
+  <pre>
+    <code>
+      $(document).ajaxError(function(e,xhr,settings,error){
+        console.log(error)
+      })
+    </code>
+  </pre>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/javascript.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('pre code').each(function (i, block) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+</html>
