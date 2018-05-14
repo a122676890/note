@@ -17,26 +17,30 @@
   }
   Base.prototype.a = 3;
 
-  var o1 = new Base();
-  var o2 = Object.create(Base);
-  console.log(o1, ' new ')
-  console.info(o2, ' Object.create ')
 
-  // Object.create 内部实现
-  Object.mycreate = function (o) {
-    var F = function () { }
-    F.prototype = o
-    console.log(F.prototype.prototype)
-    return new F()
-  }
-  // 得出 Object.mycreate 与 Object.mycreate 相同结果
-  var o3 = Object.mycreate(Base)
-  console.log(o3)
-  console.log(o1.a)
-  console.log(o2.a)
-  console.log(o3.a)
+  var p_1 = Object.create(Base)
+  var p_2 = new Object()
+  p_2.__proto__ = Base // p_1 p_2 一样
+  console.log(p_1, p_2)
 
-  console.log(o3.__proto__.prototype.a)
+  var p_3 = new Base()
+  var p_4 = new Object()
+  p_4.__proto__ = Base.prototype
+  Base.call(p_4)
+  console.log(p_3, p_4)
+
+
+
+  // Object.mycreate=function()
+
+  // console.log(new Base())
+  // 
+  // Object.mycreate = function (o) {
+  //   var F = new Object()
+  //   F.__proto__ = o.prototype
+  //   return F
+  // }
+  // console.log(Object.mycreate(Base))
 
   //  Object.create 
   // 1.  创建空对象{} 
