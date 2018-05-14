@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Object Create 和 new 的区别</title>
+</head>
+
+<body>
+  <h1> Object Create 和 new 的区别</h1>
+</body>
+<script>
+  var Base = function () {
+    this.a = 'test'
+  }
+  Base.prototype.a = 3;
+
+  var o1 = new Base();
+  var o2 = Object.create(Base);
+  console.log(o1, ' new ')
+  console.info(o2, ' Object.create ')
+
+  // Object.create 内部实现
+  Object.mycreate = function (o) {
+    var F = function () { }
+    F.prototype = o
+    console.log(F.prototype.prototype)
+    return new F()
+  }
+  // 得出 Object.mycreate 与 Object.mycreate 相同结果
+  var o3 = Object.mycreate(Base)
+  console.log(o3)
+  console.log(o1.a)
+  console.log(o2.a)
+  console.log(o3.a)
+
+  console.log(o3.__proto__.prototype.a)
+
+  //  Object.create 
+  // 1.  创建空对象{} 
+  // 2.  指定空对象{}的原型为Object.create()的参数。
+  // new 的过程 
+  // 1.创建实例对象person1 
+  // 2. 调用构造函数(Person)初始化person1成员变量（firstname 
+  // 3. 指定实例对象的原型为Person.prototype对象。即person1.__proto__指向Person.prototype。
+</script>
+
+</html>
