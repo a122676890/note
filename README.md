@@ -4,3 +4,7 @@
 
 Leaflet.js 、Cesium.js 、WebGL 和 three.js
 
+  "pre-commit": [
+    // "lint",
+    // "test"
+  ],

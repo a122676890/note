@@ -4,19 +4,35 @@
   "description": "日常笔记 . 将笔记归类从新写入 github",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint ./src/*",
+    "test": "jest",
+    "ci": "npm run lint && npm run test -- --coverage"
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/a122676890/note.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/a122676890/note/issues"
   },
   "homepage": "https://github.com/a122676890/note#readme",
   "dependencies": {
-    "bcrypt": "^2.0.1"
+    "bcrypt": "^2.0.1",
+    "immutable": "^3.8.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^5.0.1",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jest": "^21.17.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.10.0",
+    "jest": "^23.2.0",
+    "pre-commit": "^1.2.2"
   }
 }
