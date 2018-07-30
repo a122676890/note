@@ -1,7 +1,8 @@
-import LinkedListNode from './LinkedListNode';
+import DoublyLinkedListNode from './DoublyLinkedListNode';
 import Comparator from '../../utils/Comparator';
 
-export default class LinkedList {
+
+export default class DoublyLinkedList {
   constructor(comparatorFunction) {
     this.head = null;
     this.tail = null;
@@ -9,22 +10,27 @@ export default class LinkedList {
   }
 
   prepend(value) {
-    const newNode = new LinkedListNode(value, this.head);
-    this.head = newNode;
-    if (!this.tail) {
+    const newNode = new DoublyLinkedListNode(value);
+    if (!this.head) {
+      this.head = newNode;
       this.tail = newNode;
+      return this;
     }
+    this.head.previous = newNode;
+    newNode.next = this.head;
+    this.head = newNode;
     return this;
   }
 
   append(value) {
-    const newNode = new LinkedListNode(value);
+    const newNode = new DoublyLinkedListNode(value);
     if (!this.head) {
       this.head = newNode;
       this.tail = newNode;
       return this;
     }
     this.tail.next = newNode;
+    newNode.previous = this.tail;
     this.tail = newNode;
     return this;
   }
@@ -34,45 +40,46 @@ export default class LinkedList {
       return null;
     }
     let deletedNode = null;
-    while (this.head && this.compare.equal(this.head.value, value)) {
-      deletedNode = this.head;
-      this.head = this.head.next;
-    }
     let currentNode = this.head;
-    if (currentNode !== null) {
-      // If next node must be deleted then make next node to be a next next one.
-      while (currentNode.next) {
-        if (this.compare.equal(currentNode.next.value, value)) {
-          deletedNode = currentNode.next;
-          currentNode.next = currentNode.next.next;
+    while (currentNode) {
+      if (this.compare.equal(currentNode.value, value)) {
+        deletedNode = currentNode;
+        if (deletedNode === this.head) {
+          this.head = deletedNode.next;
+          if (this.head) {
+            this.head.previous = null;
+          }
+          if (deletedNode === this.tail) {
+            this.tail = null;
+          }
+        } else if (deletedNode === this.tail) {
+          this.tail = deletedNode.previous;
+          this.tail.next = null;
         } else {
-          currentNode = currentNode.next;
+          const previousNode = deletedNode.previous;
+          const nextNode = deletedNode.next;
+
+          previousNode.next = nextNode;
+          nextNode.previous = previousNode;
         }
       }
-    }
-    if (this.compare.equal(this.tail.value, value)) {
-      this.tail = currentNode;
+      currentNode = currentNode.next;
     }
     return deletedNode;
   }
 
   deleteTail() {
+    if (!this.tail) {
+      return null;
+    }
+    const deletedTail = this.tail;
     if (this.head === this.tail) {
-      const deletedTail = this.tail;
       this.head = null;
       this.tail = null;
       return deletedTail;
     }
-    const deletedTail = this.tail;
-    let currentNode = this.head;
-    while (currentNode.next) {
-      if (!currentNode.next.next) {
-        currentNode.next = null;
-      } else {
-        currentNode = currentNode.next;
-      }
-    }
-    this.tail = currentNode;
+    this.tail = deletedTail.previous;
+    this.tail.next = null;
     return deletedTail;
   }
 
@@ -81,12 +88,13 @@ export default class LinkedList {
       return null;
     }
     const deletedHead = this.head;
-    if (this.head.next) {
-      this.head = this.head.next;
-    } else {
-      this.tail = null;
+    if (this.head === this.tail) {
       this.head = null;
+      this.tail = null;
+      return deletedHead;
     }
+    this.head = deletedHead.next;
+    this.head.previous = null;
     return deletedHead;
   }
 

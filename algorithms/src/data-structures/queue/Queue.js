@@ -1,19 +1,8 @@
-import LinkedList from './linked-list/LinkedList';
+import LinkedList from '../linked-list/LinkedList';
 
 export default class Queue {
   constructor() {
     this.linkedList = new LinkedList();
-  }
-
-  isEmpty() {
-    return !this.linkedList.tail;
-  }
-
-  peek() {
-    if (!this.linkedList.head) {
-      return null;
-    }
-    return this.linkedList.head.value;
   }
 
   enqueue(value) {
@@ -23,6 +12,17 @@ export default class Queue {
   dequeue() {
     const removedHead = this.linkedList.deleteHead();
     return removedHead ? removedHead.value : null;
+  }
+
+  peek() {
+    if (!this.linkedList.head) {
+      return null;
+    }
+    return this.linkedList.head.value;
+  }
+
+  isEmpty() {
+    return !this.linkedList.tail;
   }
 
   toString(callback) {
