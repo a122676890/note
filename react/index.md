@@ -17,9 +17,6 @@
             PropTypes模块(组件取context需要先判断类型)
             Children模块(提供操作children的方法)
             options模块(也可叫调度模块,因为我们不可避免使用到队列来处理diff或各种回调,以及一些插件如redux也需要一些钩子函数)
-        +
-
-    https://github  .com/sven36/MayReact
 
 # react-router
 
