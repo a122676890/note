@@ -9,30 +9,30 @@
 var pro = function(time) {
   return new Promise(function(resolve, reject) {
     setTimeout(() => {
-      resolve('success' + time)
-    }, time)
-  })
-}
+      resolve("success" + time);
+    }, time);
+  });
+};
 
 var gen = function*() {
-  var f1 = yield pro(200)
-  var f2 = yield pro(400)
-  console.log(f1.toString())
-  console.log(f2.toString())
-}
-run(gen)
+  var f1 = yield pro(200);
+  var f2 = yield pro(400);
+  console.log(f1.toString());
+  console.log(f2.toString());
+};
+run(gen);
 function run(gen) {
-  let g = gen()
+  let g = gen();
   function next(data) {
-    let result = g.next(data)
+    let result = g.next(data);
     if (result.done) {
-      return result.value
+      return result.value;
     }
     result.value.then(data => {
-      next(data)
-    })
+      next(data);
+    });
   }
-  next()
+  next();
 }
 // g.next().value.then(data => {
 //   console.log(data)
